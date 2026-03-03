@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A sample HTML5 webpage demonstrating semantic structure, navigation, article, image, and footer.">
+    <title>My Semantic HTML5 Page</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #333;
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+            background: white;
+        }
+
+        article {
+            margin-top: 20px;
+        }
+
+        figure {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        img {
+            max-width: 400px;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>My Website</h1>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#articles">Articles</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <section id="home">
+        <h2>Welcome</h2>
+        <p>Welcome to my sample semantic HTML5 webpage.</p>
+    </section>
+
+    <section id="articles">
+        <article>
+            <h2>Understanding Semantic HTML</h2>
+            <p>
+                Semantic HTML uses meaningful tags like 
+                <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, 
+                <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, 
+                and <code>&lt;article&gt;</code> to structure content clearly.
+            </p>
+
+            <figure>
+                <img src="https://static.semrush.com/blog/uploads/media/27/5d/275d10e79efccfe6f90ea9e96c83cbc5/f986db2cea458dc974e9952ac26cc5e8/AD_4nXdMb0QDe2AfsPjwboSUIrT12QTcblAi01ZAC0ysAesKBn-04xYDngPpvHeAjoRx-FToblqlukGqTSSuSvMgOlom-e_DPAfvm8rfvCsICGPc5nBLK-X0hpFfz9GFiPMEbymijIJU5A.webp"
+                     alt="Diagram showing website structure using semantic HTML elements">
+                <figcaption>Example of semantic webpage structure.</figcaption>
+            </figure>
+
+            <p>
+                Using semantic elements improves accessibility, SEO, 
+                and makes the code easier to maintain.
+            </p>
+        </article>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2026 Vimuth Ranmuthu. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
