@@ -1,138 +1,114 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Western Sydney University Student registration form"
-    />
-    <meta name="keywords" content="WSU, registration, student, Australian University">
-    <meta name="author" content="Vimuth Ranmuthu">
-    <meta name="robots" content="index, follow">
-    <title>My Basic Website</title>
-    <link rel="stylesheet" href="styles.css">
-  </head>
 
-  <body>
-    <header>
-      <h1>Student Registration</h1>
-      <nav>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="#articles">Articles</a></li>
-          <li><a href="register.html" aria-current="page">Register</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-    </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Western Sydney University Student registration form" />
+  <meta name="keywords" content="WSU, registration, student, Australian University">
+  <meta name="author" content="Vimuth Ranmuthu">
+  <meta name="robots" content="index, follow">
+  <title>My Basic Website</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
 
-    <main>
-      <h2>Registration Form</h2>
+<body>
+  <header>
+    <h1>Student Registration</h1>
+    <nav class="menu">
+      <a href="/">Home</a>
+      <a href="#articles">Articles</a>
+      <a href="register.html" aria-current="page">Register</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
 
-      <form>
-        <fieldset>
-          <legend>Personal Information</legend>
+  <main>
+    <h2>Registration Form</h2>
 
-          <label for="firstName" class="required">First Name</label>
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            required
-            aria-required="true"
-          />
-          <div class="error">First name is required.</div>
+    <form>
+      <fieldset>
+        <legend>Personal Information</legend>
+        <div class="form-grid">
+          <div class="field">
+            <label for="firstName" class="required">First Name</label>
+            <input type="text" id="firstName" name="firstName" required aria-required="true" />
+            <div class="error">First name is required.</div>
+          </div>
+          <div class="field">
+            <label for="lastName" class="required">Last Name</label>
+            <input type="text" id="lastName" name="lastName" required aria-required="true" />
+            <div class="error">Last name is required.</div>
+          </div>
+          <div class="field">
+            <label for="dob">Date of Birth</label>
+            <input type="date" id="dob" name="dob" />
+          </div>
+          <div class="field">
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender">
+              <option value="">Select...</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+              <option value="prefer-not-to-say">Prefer not to say</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
 
-          <label for="lastName" class="required">Last Name</label>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            required
-            aria-required="true"
-          />
-          <div class="error">Last name is required.</div>
+      <fieldset>
+        <legend>Contact Information</legend>
+        <div class="form-grid">
+          <div class="field">
+            <label for="email" class="required">Email Address</label>
+            <input type="email" id="email" name="email" required placeholder="example@domain.com" aria-required="true" />
+            <div class="error">Please enter a valid email address.</div>
+          </div>
+          <div class="field">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="123-456-789" />
+          </div>
+        </div>
+      </fieldset>
 
-          <label for="dob">Date of Birth</label>
-          <input
-            type="date"
-            id="dob"
-            name="dob"
-          />
+      <fieldset>
+        <legend>Academic Information</legend>
+        <div class="form-grid">
+          <div class="field">
+            <label for="studentId">Student ID</label>
+            <input type="text" id="studentId" name="studentId" />
+          </div>
+          <div class="field">
+            <label for="program">Program of Study</label>
+            <select id="program" name="program">
+              <option value="">Select a program...</option>
+              <option value="computer-science">Computer Science</option>
+              <option value="engineering">Engineering</option>
+              <option value="business">Business Administration</option>
+              <option value="arts">Arts</option>
+              <option value="science">Science</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="enrollmentYear">Year of Enrollment</label>
+            <select id="enrollmentYear" name="enrollmentYear">
+              <option value="">Select year...</option>
+              <option value="2024">2024</option>
+              <option value="2025">2025</option>
+              <option value="2026">2026</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
 
-          <label for="gender">Gender</label>
-          <select id="gender" name="gender">
-            <option value="">Select...</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-            <option value="prefer-not-to-say">Prefer not to say</option>
-          </select>
-        </fieldset>
+      <button type="submit">Submit Registration</button>
+    </form>
+  </main>
 
-        <fieldset>
-          <legend>Contact Information</legend>
-          <label for="email" class="required">Email Address</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            placeholder="example@domain.com"
-            aria-required="true"
-          />
-          <div class="error">Please enter a valid email address.</div>
+  <footer>
+    <p>&copy; 2026 Vimuth Ranmuthu. All rights reserved.</p>
+  </footer>
+</body>
 
-          <label for="phone">Phone Number</label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            placeholder="123-456-789"
-          />
-        </fieldset>
-
-        <fieldset>
-          <legend>Academic Information</legend>
-
-          <label for="studentId">Student ID</label>
-          <input
-            type="text"
-            id="studentId"
-            name="studentId"
-          />
-
-          <label for="program">Program of Study</label>
-          <select id="program" name="program">
-            <option value="">Select a program...</option>
-            <option value="computer-science">Computer Science</option>
-            <option value="engineering">Engineering</option>
-            <option value="business">Business Administration</option>
-            <option value="arts">Arts</option>
-            <option value="science">Science</option>
-          </select>
-
-          <label for="enrollmentYear"
-            >Year of Enrollment</label
-          >
-          <select
-            id="enrollmentYear"
-            name="enrollmentYear"
-          >
-            <option value="">Select year...</option>
-            <option value="2024">2024</option>
-            <option value="2025">2025</option>
-            <option value="2026">2026</option>
-          </select>
-        </fieldset>
-
-        <button type="submit">Submit Registration</button>
-      </form>
-    </main>
-
-    <footer>
-      <p>&copy; 2026 Vimuth Ranmuthu. All rights reserved.</p>
-    </footer>
-  </body>
 </html>
