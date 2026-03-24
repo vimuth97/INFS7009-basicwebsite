@@ -17,6 +17,16 @@ const server = http.createServer((req, res) => {
 
     res.writeHead(200, { "Content-Type": "text/css" });
     res.end(css);
+  } else if (req.url === "/es6register") {
+    const html = fs.readFileSync("./ES6-register.html");
+
+    res.writeHead(200, { "Content-Type": "text/html" });
+    res.end(html);
+  } else if (req.url === "/taskmanager") {
+    const html = fs.readFileSync("./task-manager.html");
+
+    res.writeHead(200, { "Content-Type": "text/html" });
+    res.end(html);
   }
 });
 

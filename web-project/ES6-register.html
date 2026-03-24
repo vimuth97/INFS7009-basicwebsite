@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="WSU, registration, student, Australian University">
+    <meta name="author" content="Vimuth Ranmuthu">
+    <title>Register</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        .form-card {
+            max-width: 400px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 16px;
+        }
+
+        .field label {
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+
+        .error {
+            color: #d00;
+            font-size: 0.85em;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .error.visible {
+            display: block;
+        }
+
+        .names {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        #successMsg {
+            display: none;
+            color: white;
+            margin-top: 16px;
+            background-color: forestgreen;
+            border-radius: 4px;
+            width: 50%;
+            padding: 4px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #usernameCount {
+            font-size: 0.85em;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Create Account</h1>
+        <nav class="menu">
+            <a href="/">Home</a>
+            <a href="register.html">Register</a>
+            <a href="ES6-register.html" aria-current="page">Sign Up</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="form-card">
+            <h2>Sign Up</h2>
+            <form id="registerForm" novalidate>
+
+                <div class="names">
+                    <div class="field">
+                        <label for="firstName" class="required">First Name</label>
+                        <input type="text" id="firstName" name="firstName" required aria-required="true" />
+                        <span id="firstNameError" class="error" role="alert">First name is required.</span>
+                    </div>
+                    <div class="field">
+                        <label for="lastName" class="required">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" required aria-required="true" />
+                        <span id="lastNameError" class="error" role="alert">Last name is required.</span>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="username" class="required">Username</label>
+                    <input type="text" id="username" name="username" required aria-required="true" />
+                    <span id="usernameCount">0 characters</span>
+                    <span id="usernameError" class="error" role="alert">Username must be at least 3 characters.</span>
+                </div>
+
+                <div class="field">
+                    <label for="email" class="required">Email Address</label>
+                    <input type="email" id="email" name="email" required aria-required="true" />
+                    <span id="emailError" class="error" role="alert">Please enter a valid email address.</span>
+                </div>
+
+                <div class="field">
+                    <label for="password" class="required">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Minimum 8 characters" required
+                        aria-required="true" />
+                    <span id="passwordError" class="error" role="alert">Min 8 characters, at least 1 number and 1
+                        special character.</span>
+                </div>
+
+                <button type="submit">Register</button>
+                <p id="successMsg" role="status">✅ Registration successful!</p>
+            </form>
+            <button type="button" id="bgBtn">Change Background Color</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Vimuth Ranmuthu. All rights reserved.</p>
+    </footer>
+
+    <script type="module">
+        const form = document.getElementById('registerForm');
+
+        const validators = {
+            firstName: (val) => val.trim().length > 0,
+            lastName: (val) => val.trim().length > 0,
+            username: (val) => val.trim().length >= 3,
+            email: (val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val),
+            password: (val) => val.length >= 8 && /[0-9]/.test(val) && /[^a-zA-Z0-9]/.test(val),
+        };
+
+        const showError = (id, show) => {
+            document.getElementById(id).classList.toggle('visible', show);
+        };
+
+        const getRandomRGB = () => {
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        document.getElementById('username').addEventListener('input', (e) => {
+            const count = e.target.value.length;
+            document.getElementById('usernameCount').textContent = `${count} character${count !== 1 ? 's' : ''}`;
+        });
+
+        document.getElementById('bgBtn').addEventListener('click', () => {
+            document.body.style.backgroundColor = getRandomRGB();
+        });
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const fields = ['firstName', 'lastName', 'username', 'email', 'password'];
+            const values = Object.fromEntries(fields.map(f => [f, document.getElementById(f).value]));
+            const errors = fields.map(f => {
+                const valid = validators[f](values[f]);
+                showError(`${f}Error`, !valid);
+                return !valid;
+            });
+
+            if (!errors.includes(true)) {
+                document.getElementById('successMsg').style.display = 'block';
+                form.reset();
+            }
+        });
+    </script>
+</body>
+
+</html>

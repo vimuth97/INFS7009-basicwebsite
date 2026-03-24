@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mini Task Manager</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        .task-card {
+            max-width: 500px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+        }
+
+        .task-input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .task-input-row input {
+            flex: 1;
+            margin-top: 0;
+        }
+
+        .task-input-row button {
+            margin-top: 0;
+            padding: 8px 20px;
+        }
+
+        #taskList {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #taskList li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        #taskList li.completed span {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        .task-text {
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .delete-btn {
+            background: #c0392b;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 10px;
+            font-size: 0.85em;
+            cursor: pointer;
+            margin-top: 0;
+            margin-left: 10px;
+        }
+
+        .delete-btn:hover {
+            background: #a93226;
+        }
+
+        #emptyMsg {
+            color: #999;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Mini Task Manager</h1>
+        <nav class="menu">
+            <a href="/">Home</a>
+            <a href="task-manager.html" aria-current="page">Task Manager</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="task-card">
+            <h2>My Tasks</h2>
+
+            <div class="task-input-row">
+                <input type="text" id="taskInput" placeholder="Enter a new task..." aria-label="Task input" />
+                <button id="addBtn">Add</button>
+            </div>
+
+            <ul id="taskList" aria-label="Task list"></ul>
+            <p id="emptyMsg">No tasks yet. Add one above!</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Vimuth Ranmuthu. All rights reserved.</p>
+    </footer>
+
+    <script type="module">
+        const taskInput = document.querySelector('#taskInput');
+        const addBtn = document.querySelector('#addBtn');
+        const taskList = document.querySelector('#taskList');
+        const emptyMsg = document.querySelector('#emptyMsg');
+
+        const updateEmptyMsg = () => {
+            emptyMsg.style.display = taskList.children.length === 0 ? 'block' : 'none';
+        };
+
+
+        const addTask = () => {
+            const text = taskInput.value.trim();
+
+            if (!text) return;
+
+            const li = document.createElement('li');
+            const span = document.createElement('span');
+            const deleteBtn = document.createElement('button');
+
+            span.textContent = text;
+            span.classList.add('task-text');
+            span.title = 'Click to mark as completed';
+
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.classList.add('delete-btn');
+
+            span.addEventListener('click', () => li.classList.toggle('completed'));
+
+            deleteBtn.addEventListener('click', () => {
+                li.remove();
+                updateEmptyMsg();
+            });
+
+            li.appendChild(span);
+            li.appendChild(deleteBtn);
+            taskList.appendChild(li);
+
+            taskInput.value = '';
+            taskInput.focus();
+            updateEmptyMsg();
+        };
+
+        addBtn.addEventListener('click', addTask);
+
+        taskInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') addTask();
+        });
+
+        updateEmptyMsg();
+    </script>
+</body>
+
+</html>
