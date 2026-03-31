@@ -14,7 +14,10 @@ const server = http.createServer((req, res) => {
     res.end(html);
   } else if (req.url === "/styles.css") {
     const css = fs.readFileSync("./styles.css");
-
+    res.writeHead(200, { "Content-Type": "text/css" });
+    res.end(css);
+  } else if (req.url === "/posts.css") {
+    const css = fs.readFileSync("./posts.css");
     res.writeHead(200, { "Content-Type": "text/css" });
     res.end(css);
   } else if (req.url === "/es6register") {
@@ -24,6 +27,11 @@ const server = http.createServer((req, res) => {
     res.end(html);
   } else if (req.url === "/taskmanager") {
     const html = fs.readFileSync("./task-manager.html");
+
+    res.writeHead(200, { "Content-Type": "text/html" });
+    res.end(html);
+  } else if (req.url === "/posts") {
+    const html = fs.readFileSync("./posts.html");
 
     res.writeHead(200, { "Content-Type": "text/html" });
     res.end(html);

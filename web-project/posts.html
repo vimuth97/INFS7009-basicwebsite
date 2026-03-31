@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Posts</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="posts.css" />
+</head>
+
+<body>
+    <header>
+        <h1>Posts</h1>
+        <nav class="menu">
+            <a href="/">Home</a>
+            <a href="/posts" aria-current="page">Posts</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="posts-card">
+            <h2>Manage Posts</h2>
+
+            <div class="actions">
+                <button id="fetchBtn">Get Posts</button>
+                <button id="newPostBtn">+ New Post</button>
+            </div>
+
+            <div id="postForm" hidden>
+                <h3 id="formTitle">New Post</h3>
+                <label for="titleInput">Title</label>
+                <input type="text" id="titleInput" placeholder="Post title" />
+                <label for="bodyInput">Body</label>
+                <textarea id="bodyInput" placeholder="Post body"></textarea>
+                <div class="form-footer">
+                    <button id="saveBtn">Save</button>
+                    <button class="btn-cancel" id="cancelBtn">Cancel</button>
+                </div>
+            </div>
+
+            <p id="statusMsg" role="status"></p>
+            <ul id="postList" aria-label="Post list"></ul>
+        </div>
+
+        <script type="module">
+            const fetchBtn = document.getElementById('fetchBtn');
+            const newPostBtn = document.getElementById('newPostBtn');
+            const postList = document.getElementById('postList');
+            const statusMsg = document.getElementById('statusMsg');
+            const postForm = document.getElementById('postForm');
+            const formTitle = document.getElementById('formTitle');
+            const titleInput = document.getElementById('titleInput');
+            const bodyInput = document.getElementById('bodyInput');
+            const saveBtn = document.getElementById('saveBtn');
+            const cancelBtn = document.getElementById('cancelBtn');
+
+            let editingId = null;
+
+            const showStatus = (msg, type) => {
+                statusMsg.textContent = msg;
+                statusMsg.className = type;
+                setTimeout(() => statusMsg.className = '', 3000);
+            };
+
+            const openForm = (title, titleVal = '', bodyVal = '') => {
+                formTitle.textContent = title;
+                titleInput.value = titleVal;
+                bodyInput.value = bodyVal;
+                postForm.hidden = false;
+                titleInput.focus();
+            };
+
+            const closeForm = () => {
+                postForm.hidden = true;
+                editingId = null;
+            };
+
+            const createPostItem = ({ id, title, body }) => {
+                const li = document.createElement('li');
+                li.id = `post-${id}`;
+                li.innerHTML = `
+        <strong>${title}</strong>
+        <p>${body}</p>
+        <div class="post-actions">
+          <button class="btn-edit">Edit</button>
+          <button class="btn-delete">Delete</button>
+        </div>
+      `;
+
+                li.querySelector('.btn-edit').addEventListener('click', () => {
+                    editingId = id;
+                    openForm('Edit Post', title, body);
+                });
+
+                li.querySelector('.btn-delete').addEventListener('click', () => deletePost(id));
+
+                return li;
+            };
+
+            // GET
+            const getPosts = async () => {
+                fetchBtn.disabled = true;
+                postList.innerHTML = '';
+                try {
+                    const res = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=5');
+                    const posts = await res.json();
+                    posts.forEach(post => postList.appendChild(createPostItem(post)));
+                    showStatus(`Loaded ${posts.length} posts.`, 'success');
+                } catch {
+                    showStatus('Failed to fetch posts.', 'error');
+                } finally {
+                    fetchBtn.disabled = false;
+                }
+            }
+
+            // POST
+            const createPost = async (title, body) => {
+                const res = await fetch('https://jsonplaceholder.typicode.com/posts', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, body }),
+                });
+                const post = await res.json();
+                postList.prepend(createPostItem(post));
+                showStatus(`Post "${post.title}" created.`, 'success');
+            };
+
+            // PUT
+            const updatePost = async (id, title, body) => {
+                console.log('Updating post:', { id, title, body });
+                const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id, title, body }),
+                });
+                const post = await res.json();
+                const li = document.getElementById(`post-${id}`);
+                if (li) li.replaceWith(createPostItem(post));
+                showStatus(`Post "${post.title}" updated.`, 'success');
+            };
+
+            // DELETE
+            const deletePost = async (id) => {
+                await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, { method: 'DELETE' });
+                document.getElementById(`post-${id}`)?.remove();
+                showStatus('Post deleted successfully.', 'success');
+            };
+
+            // Save Post
+            const savePost = async () => {
+                const title = titleInput.value.trim();
+                const body = bodyInput.value.trim();
+                if (!title || !body) return showStatus('Title and body are required.', 'error');
+
+                const currentEditingId = editingId;
+                closeForm();
+                try {
+                    if (currentEditingId) {
+                        await updatePost(currentEditingId, title, body);
+                    } else {
+                        await createPost(title, body);
+                    }
+                } catch {
+                    showStatus('Operation failed.', 'error');
+                }
+            };
+
+            fetchBtn.addEventListener('click', getPosts);
+            saveBtn.addEventListener('click', savePost);
+
+            newPostBtn.addEventListener('click', () => { editingId = null; openForm('New Post'); });
+            cancelBtn.addEventListener('click', closeForm);
+        </script>
+</body>
+
+</html>
